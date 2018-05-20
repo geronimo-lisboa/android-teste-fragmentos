@@ -1,9 +1,13 @@
 package estudosfragmento.geronimo.don.estudofragmentos;
 
+
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,7 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity implements TesteFragmento.OnFragmentInteractionListener{
-
+    private Pessoa pessoa = new Pessoa()    ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,8 +28,11 @@ public class MainActivity extends AppCompatActivity implements TesteFragmento.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Como adicionar fragmentos dinamicamente à tela:
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();//getFragmentManager().beginTransaction();
+                TesteFragmento frag = new TesteFragmento();
+                ft.add(R.id.fragContainer, frag);
+                ft.commit();
             }
         });
     }
