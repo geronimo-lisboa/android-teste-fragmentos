@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -42,7 +44,8 @@ public class MainActivity extends AppCompatActivity implements TesteFragmento.On
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         for(Pessoa p:pessoas){
             TesteFragmento frag = TesteFragmento.newInstance(p);
-            fragmentTransaction.add(R.id.fragContainer, frag);
+            String tag = "Pessoa_"+p.getId();
+            fragmentTransaction.add(R.id.fragContainer, frag, tag);
         }
         fragmentTransaction.commit();//Commit das alterações
 
@@ -85,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements TesteFragmento.On
 
 
     @Override
-    public void updateData(Pessoa pessoa) {
+    public void updatePessoa(Pessoa pessoa) {
         List<Pessoa> newList = new ArrayList<>();
         for(Pessoa p:pessoas){
             if(p.getId().equals(pessoa.getId())){
@@ -95,5 +98,15 @@ public class MainActivity extends AppCompatActivity implements TesteFragmento.On
             }
         }
         pessoas = newList;
+    }
+
+    @Override
+    public void deletePessoa(Pessoa p) {
+        String tag = "Pessoa_"+p.getId();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentByTag(tag);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.hide(fragment);
+        fragmentTransaction.commit();
     }
 }

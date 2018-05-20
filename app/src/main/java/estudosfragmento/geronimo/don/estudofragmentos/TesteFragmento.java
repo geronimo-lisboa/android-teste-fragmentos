@@ -1,7 +1,6 @@
 package estudosfragmento.geronimo.don.estudofragmentos;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -25,7 +24,7 @@ public class TesteFragmento extends Fragment {
     private Pessoa pessoa = null;
     private EditText edtTexto = null;
     private EditText edtValor = null;
-    private Button btnUpdate = null;
+    private Button btnUpdate, btnExcluir = null;
 
     private OnFragmentInteractionListener mListener;
 
@@ -69,7 +68,14 @@ public class TesteFragmento extends Fragment {
                 pessoa.setValor(Integer.parseInt(edtValor.getText().toString()));
                 pessoa.setTexto(edtTexto.getText().toString());
                 //chama aquele que implementa a interface(no caso a activity)
-                mListener.updateData(pessoa);
+                mListener.updatePessoa(pessoa);
+            }
+        });
+        btnExcluir = (Button)fragView.findViewById(R.id.btnExcluir);
+        btnExcluir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.deletePessoa(pessoa);
             }
         });
         return fragView;
@@ -103,6 +109,7 @@ public class TesteFragmento extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        void updateData(Pessoa p);
+        void updatePessoa(Pessoa p);
+        void deletePessoa(Pessoa p);
     }
 }
