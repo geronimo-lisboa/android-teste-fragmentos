@@ -15,24 +15,45 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import junit.framework.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements TesteFragmento.OnFragmentInteractionListener{
-    private Pessoa pessoa = new Pessoa()    ;
+
+    private List<Pessoa> pessoas = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Criação dos dados de teste.
+        pessoas.add(new Pessoa(0, "Charlie", 19));
+        pessoas.add(new Pessoa(1, "Easy", 39));
+        pessoas.add(new Pessoa(2, "Able", 21));
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //Hora de criar os fragments pras pessoas:
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        for(Pessoa p:pessoas){
+            TesteFragmento frag = TesteFragmento.newInstance(p);
+            fragmentTransaction.add(R.id.fragContainer, frag);
+        }
+        fragmentTransaction.commit();//Commit das alterações
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Como adicionar fragmentos dinamicamente à tela:
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();//getFragmentManager().beginTransaction();
-                TesteFragmento frag = new TesteFragmento();
-                ft.add(R.id.fragContainer, frag);
-                ft.commit();
+//                //Como adicionar fragmentos dinamicamente à tela:
+//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();//getFragmentManager().beginTransaction();
+//                TesteFragmento frag = new TesteFragmento();
+//                ft.add(R.id.fragContainer, frag);
+//                ft.commit();
             }
         });
     }
