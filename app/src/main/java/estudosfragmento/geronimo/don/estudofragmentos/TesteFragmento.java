@@ -62,14 +62,17 @@ public class TesteFragmento extends Fragment {
         edtTexto.setText(pessoa.getTexto());
         edtValor = (EditText)fragView.findViewById(R.id.edtValor);
         edtValor.setText(pessoa.getValor().toString());
+        btnUpdate = (Button)fragView.findViewById(R.id.btnUpdateData);
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pessoa.setValor(Integer.parseInt(edtValor.getText().toString()));
+                pessoa.setTexto(edtTexto.getText().toString());
+                //chama aquele que implementa a interface(no caso a activity)
+                mListener.updateData(pessoa);
+            }
+        });
         return fragView;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -100,7 +103,6 @@ public class TesteFragmento extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void updateData(Pessoa p);
     }
 }

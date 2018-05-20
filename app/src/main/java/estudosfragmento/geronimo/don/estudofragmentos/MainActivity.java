@@ -18,7 +18,10 @@ import android.view.MenuItem;
 import junit.framework.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 public class MainActivity extends AppCompatActivity implements TesteFragmento.OnFragmentInteractionListener{
 
@@ -80,8 +83,17 @@ public class MainActivity extends AppCompatActivity implements TesteFragmento.On
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
-    public void onFragmentInteraction(Uri uri) {
-        Log.d("TESTE_FRAGMENTO", uri.toString());
+    public void updateData(Pessoa pessoa) {
+        List<Pessoa> newList = new ArrayList<>();
+        for(Pessoa p:pessoas){
+            if(p.getId().equals(pessoa.getId())){
+                newList.add(pessoa);
+            }else{
+                newList.add(p);
+            }
+        }
+        pessoas = newList;
     }
 }
